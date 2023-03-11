@@ -12,7 +12,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" placeholder="Password" v-model="password"/>
             </div>
-            <button @click.prevent="login" class="btn solid" ></button>
+            <q-btn @click.prevent="login" class="btn solid" label="Login" />
             <div class="social-media">
             </div>
           </form>
@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     login() {
-      if(this.username != null && this.password != null)
-      {
+      if(this.username != null && this.password != null) {
         let username = localStorage.setItem('username', this.username);
         let password = localStorage.setItem('password', this.password);
         this.$router.push("/home");

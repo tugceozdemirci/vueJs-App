@@ -229,10 +229,10 @@ transition: 0.5s;
 }
 
 .content {
-height: 200px;
+height: 100px;
 width: 100%;
 background-color: #fff;
-padding-top: 40px;
+padding-top: 20px;
 text-align: center;
 }
 .content-card {
