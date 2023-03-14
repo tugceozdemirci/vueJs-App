@@ -44,7 +44,7 @@ export default {
   methods: {
     login() {
       if(this.username.length != 0 && this.password.length != 0) {
-        let username = localStorage.setItem('username', this.username);
+        let username = localStorage.setItem('user', this.username);
         let password = localStorage.setItem('password', this.password);
         this.$router.push("/home");
       }

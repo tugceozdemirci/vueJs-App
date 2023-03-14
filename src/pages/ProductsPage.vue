@@ -5,7 +5,7 @@
       title="Projects"
       :data="products"
       :columns="columns"
-      :pagination="1"
+
     />
   </div>
   </div>

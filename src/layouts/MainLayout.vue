@@ -84,9 +84,7 @@ export default {
   },
   mounted() {
     // let currentUser = localStorage.getItem('username');
-    let currentUser = JSON.parse(localStorage.getItem('username'));
-
-    // currentUser = localStorage.getItem(JSON.parse('user'));
+    let currentUser = JSON.parse(localStorage.getItem("user"));
     currentUser = currentUser.toUpperCase();
   },
 

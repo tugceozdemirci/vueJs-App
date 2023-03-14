@@ -3,7 +3,7 @@
     <q-page-container>
       <div class="content">
         <!-- CREATE PROJECT -->
-      <q-btn label="Create Project" color="accent" @click="prompt = true" />
+      <q-btn label="Create Project" color="accent" @click="prompt = true" class="btn" />
       <q-dialog v-model="prompt" persistent>
         <q-card style="width: 600px">
           <q-card-section>
@@ -98,7 +98,18 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-          <q-btn flat icon="delete" class="icons" @click="deleteTask(index)"></q-btn>
+          <q-btn flat icon="delete" class="icons" @click="confirm = true"></q-btn>
+          <q-dialog v-model="confirm" persistent>
+            <q-card style="width: 300px">
+              <q-card-section class="row items-center">
+                <span class="q-ml-sm">delete</span>
+              </q-card-section>
+              <q-card-actions align="right">
+                <q-btn flat label="Delete" @click="deleteTask" color="accent" v-close-popup />
+                <q-btn flat label="Cancel" color="accent" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
         </q-card-actions>
       </q-card>
     </div>
@@ -132,6 +143,7 @@ return {
   },
   prompt: false,
   prompt2: false,
+  confirm: false,
   selectedItem: "",
   editTitle: "",
   editDescription: "",
@@ -213,12 +225,12 @@ deleteItem(index, itemID) {
 
 <style scoped>
 .btn {
-width: 140px;
+width: 170px;
 background-color: #6c63ff;
 border: none;
 outline: none;
 height: 49px;
-border-radius: 49px;
+border-radius: 15px;
 color: #fff;
 text-transform: uppercase;
 font-weight: 600;
