@@ -21,7 +21,7 @@
                   <img src="../assets/undraw_female_avatar_efig.svg" >
                   <q-space style="height: 20px;"></q-space>
                   <div class="text-center q-py-md">
-                    <p>{{ currentUser }}  </p>
+                    <p>  {{ currentUser }}  </p>
                   </div>
                 </q-avatar>
               </div>
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import { json } from 'body-parser';
+
 
 export default {
   name: 'MainLayout',
@@ -81,8 +83,10 @@ export default {
     }
   },
   mounted() {
-    currentUser = JSON.parse(localStorage.getItem("username"));
-    // username = localStorage.getItem("username", JSON.parse("username"));
+    // let currentUser = localStorage.getItem('username');
+    let currentUser = JSON.parse(localStorage.getItem('username'));
+
+    // currentUser = localStorage.getItem(JSON.parse('user'));
     currentUser = currentUser.toUpperCase();
   },
 

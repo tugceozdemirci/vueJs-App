@@ -2,9 +2,8 @@
   <div class="q-pa-md">
     <q-page-container>
       <div class="content">
-         <!-- CREATE PROJECT -->
+        <!-- CREATE PROJECT -->
       <q-btn label="Create Project" color="accent" @click="prompt = true" />
-
       <q-dialog v-model="prompt" persistent>
         <q-card style="width: 600px">
           <q-card-section>
@@ -229,7 +228,7 @@ transition: 0.5s;
 }
 
 .content {
-height: 100px;
+height: 50px;
 width: 100%;
 background-color: #fff;
 padding-top: 20px;
@@ -245,7 +244,6 @@ text-transform: capitalize;
 
 }
 .content-card .card-wraps {
-
 padding: 10px;
 width: 100%;
 display: flex;
@@ -255,9 +253,8 @@ justify-content: space-evenly;
 .card-wraps .my-card {
 height: 500px;
 width: 330px;
-box-shadow: 0px 5px 30px #a5a5a5;
+box-shadow: 0px 5px 5px #a5a5a5;
 justify-content: space-between;
-
 }
 
 .card-header {
@@ -269,7 +266,6 @@ padding: 1px 1px 1px;
 text-align: center;
 overflow: hidden;
 text-transform: uppercase;
-
 }
 
 .task-container {

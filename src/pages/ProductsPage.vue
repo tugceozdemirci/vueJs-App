@@ -5,19 +5,18 @@
       title="Projects"
       :data="products"
       :columns="columns"
-      :key="products"
+      :pagination="1"
     />
   </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'ProductsPage',
   data() {
       return {
-        selectedItem: null,
-        new_product: [],
         products: [
           {
             id:'',
@@ -34,15 +33,15 @@ export default {
           }
         ],
         columns: [
-          { name: "id", label: "#", field: "id" },
-          { name: "title", label: "Title", field: "title" },
-          { name: "price", label: "Price", field: "price" },
-          { name: "discountPercentage", label: "Discount Percentage", field: "discountPercentage" },
-          { name: "rating", label: "Rating", field: "rating" },
-          { name: "stock", label: "Stock", field: "stock" },
-          { name: "brand", label: "Brand", field: "brand" },
-          { name: "category", label: "Category", field: "category" },
-          { name: "description", label: "Description", field: "description" },
+          { name: "id", label: "#", field: "id" ,align: "center",},
+          { name: "title", label: "Title", field: "title" ,align: "center",},
+          { name: "price", label: "Price", field: "price",align: "center", },
+          { name: "discountPercentage", label: "Discount Percentage", field: "discountPercentage",align: "center", },
+          { name: "rating", label: "Rating", field: "rating",align: "center", },
+          { name: "stock", label: "Stock", field: "stock",align: "center", },
+          { name: "brand", label: "Brand", field: "brand",align: "center", },
+          { name: "category", label: "Category", field: "category", align: "center",},
+          { name: "description", label: "Description", field: "description", align: "left",},
 
         ],
       }
