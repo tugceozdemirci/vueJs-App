@@ -19,13 +19,12 @@
               <div class="text-center q-py-md">
                 <q-avatar size="80px">
                   <img src="../assets/undraw_female_avatar_efig.svg" >
-                  <q-space style="height: 20px;"></q-space>
                   <div class="text-center q-py-md">
-                    <p>  {{ currentUser }}  </p>
                   </div>
                 </q-avatar>
+                <q-space style="height: 10px;"></q-space>
+                <p>{{ currentUser }}</p>
               </div>
-              <q-space style="height: 30px;"></q-space>
               <q-item
               class="my-menu-link"
               to="/home">
@@ -84,8 +83,10 @@ export default {
   },
   mounted() {
     // let currentUser = localStorage.getItem('username');
-    let currentUser = JSON.parse(localStorage.getItem("user"));
-    currentUser = currentUser.toUpperCase();
+    this.currentUser = JSON.parse(localStorage.getItem("username"));
+    this.currentUser = this.currentUser.toUpperCase();
+
+
   },
 
   methods: {

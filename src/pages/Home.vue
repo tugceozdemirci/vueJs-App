@@ -56,7 +56,7 @@
             <div class="q-pa-md">
             <q-list v-for="i, itemID in task.itemList" :key="itemID" class="q-pa-md justify-between" >
               <q-item >
-                <q-item-section>{{ i.item }}</q-item-section>
+                <q-item-section>{{ i }}</q-item-section>
                 <q-item-section >
                   <q-btn color="black" flat icon="close" @click="deleteItem(index, itemID)"></q-btn>
                 </q-item-section>
@@ -224,6 +224,12 @@ deleteItem(index, itemID) {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
+}
 .btn {
 width: 170px;
 background-color: #6c63ff;
