@@ -1,5 +1,4 @@
 <template>
-  <div class="q-pa-md">
     <q-page-container>
       <div class="content">
         <!-- CREATE PROJECT -->
@@ -13,62 +12,77 @@
           <q-card-section>
             <div class="title">
               <label style="font-size: 18px; font-weight: bold;">Project Name</label>
-              <q-input color="accent" outlined v-model="title" type="text" placeholder="Your project title..." />
+              <q-input color="accent" outlined v-model="createProject.title" type="text" placeholder="Your project title..." />
             </div>
             <q-space style="height: 30px;" />
             <div class="description">
               <label style="font-size: 18px; font-weight: bold;">Description</label>
             <q-input
-              color="accent" style="max-width: 600px; background-color: white;"  outlined  type="textarea" placeholder="Short description about your project..." v-model="description"/>
+              color="accent" v-model="createProject.description" style="max-width: 600px; background-color: white;"  outlined  type="textarea" placeholder="Short description about your project..." />
           </div>
           </q-card-section>
           <q-separator color="gray" />
           <q-card-actions align="right" class="text-primary">
-            <q-btn no-caps label="Create" color="accent" @click="createTask" v-close-popup />
+            <q-btn no-caps label="Create" color="accent" @click="addNewProject" v-close-popup />
             <q-btn no-caps label="Cancel" color="accent" v-close-popup />
           </q-card-actions>
         </q-card>
       </q-dialog>
     </div>
-    <!-- TASK LİST -->
-    <div class="content-card">
+      <div class="q-pa-md">
+        <q-table
+      grid
+
+      :data="projectList"
+      :columns="columns"
+      row-key="name"
+
+      hide-header
+    >
+    </q-table>
+      </div>
+
+    <!-- PROJECT LİST -->
+    <!-- <div class="content-card">
     <div class="card-wraps">
       <div class="row justify-evenly items-baseline q-col-gutter-md q-pa-md q-gutter-md">
-      <q-card class="my-card q-py-sm " v-for="(task, index) in taskList" :key="index">
+      <q-card class="my-card q-py-sm " v-for="(project, index) in projectList" :key="index">
         <q-card-section class="card-header">
-          <div class="text-h6">{{ task.title }}</div>
+          <div class="text-h6">{{ project.title }}</div>
           <q-separator inset />
         </q-card-section>
         <q-card-section class="text-black">
           <div class="text-subtitle2 text-black">
-            {{ task.description }}
+            {{ project.description }}
           </div>
         </q-card-section>
-  <!-- ADD CARD ITEM -->
+          ----ADD CARD TASK --------
         <q-card-section class="text-white">
           <div class="add-item-input" vertical align="right">
-            <q-input outlined type="text" color="accent" placeholder="Add a item." v-model="task.taskInput" />
-            <q-btn color="accent" class="add-item-btn" icon="add" @click="addItem(task.taskInput, task.id)"></q-btn>
+            <q-input outlined type="text" color="accent" placeholder="Add a item." v-model="project.taskInput" />
+            <q-btn color="accent" class="add-item-btn" icon="add" @click="addTask(project.taskInput, project.id)"/>
           </div>
         </q-card-section>
-        <q-card-section>
+        <q-card-section class="text-white">
+          <div class="add-item-input" vertical align="right">
           <q-scroll-area :thumb-style="thumbStyle" :bar-style="barStyle" style="height: 200px; max-width: 300px;">
             <div class="q-pa-md">
-            <q-list v-for="i, itemID in task.itemList" :key="itemID" class="q-pa-md justify-between" >
+            <q-list v-for="i, taskID in project.taskList" :key="taskID" class="q-pa-md justify-between">
               <q-item >
-                <q-item-section>{{ i }}</q-item-section>
-                <q-item-section >
-                  <q-btn color="black" flat icon="close" @click="deleteItem(index, itemID)"></q-btn>
+                <q-item-section>{{ i.task }}</q-item-section>
+                <q-item-section>
+                  <q-btn color="black" flat icon="close" @click="deleteTask(index, taskID)"></q-btn>
                 </q-item-section>
               </q-item>
             </q-list>
             </div>
           </q-scroll-area>
+        </div>
         </q-card-section>
         <q-card-actions align="right" class="q-py-md" style="position: absolute; bottom: 0; ; ">
-          <!-- Edit - Delete buton yeri -->
-          <q-btn flat icon="edit" class="icons" @click="prompt2 = true; openEditTask(task.id)"></q-btn>
-          <!-- Edit Dialog -->
+          -------- Edit - Delete buton yeri -------
+          <q-btn flat icon="edit" class="icons" @click="prompt2 = true; openEditProject(project.id)"></q-btn>
+          ------------------ Edit Dialog -------------------
           <q-dialog v-model="prompt2" persistent>
         <q-card style="width: 600px">
           <q-card-section>
@@ -93,7 +107,7 @@
           </q-card-section>
           <q-separator color="gray" />
           <q-card-actions align="right" class="text-primary">
-            <q-btn no-caps label="Create" color="accent" @click="editTask()" v-close-popup />
+            <q-btn no-caps label="Update" color="accent" @click="editProject()" v-close-popup />
             <q-btn no-caps label="Cancel" color="accent" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -105,7 +119,7 @@
                 <span class="q-ml-sm">delete</span>
               </q-card-section>
               <q-card-actions align="right">
-                <q-btn flat label="Delete" @click="deleteTask" color="accent" v-close-popup />
+                <q-btn flat label="Update" color="accent" @click="deleteProject(index)" v-close-popup />
                 <q-btn flat label="Cancel" color="accent" v-close-popup />
               </q-card-actions>
             </q-card>
@@ -114,33 +128,19 @@
       </q-card>
     </div>
     </div>
-  </div>
+  </div> -->
 </q-page-container>
-</div>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
+
 export default {
 components: {},
 name: "Home",
 
 data() {
 return {
-  thumbStyle: {
-    right: '4px',
-    borderRadius: '5px',
-    backgroundColor: '#6c63ff',
-    width: '5px',
-    opacity: 0.75
-  },
-
-  barStyle: {
-    right: '2px',
-    borderRadius: '9px',
-    backgroundColor: '#6c63ff',
-    width: '9px',
-    opacity: 0.2
-  },
   prompt: false,
   prompt2: false,
   confirm: false,
@@ -149,49 +149,73 @@ return {
   editDescription: "",
   title: "",
   description: "",
-  item: "",
-  newItem: "",
-  itemArr: [],
+  task: "",
+  newTask: "",
+  taskArr: [],
   taskList: [],
+  createProject:{
+    id: null,
+    title: "",
+    description: "",
+  },
 };
+},
+computed: {
+  ...mapState('app', ['projectList']),
+  ...mapActions('app', ['setProject']),
+  ...mapGetters('app', ['allProjects']),
 },
 
 methods: {
-createTask() {
-  let id = this.taskList.length;
-  this.taskList = [...this.taskList,{
-    id: id,
-    title: this.title,
-    description: this.description,
-    itemList: [],
-    taskInput: "",
-  }];
-  // this.taskList.push({
-  //   id: this.index,
-  //   title: this.title,
-  //   description: this.description,
-  //   itemList: [],
-  // });
-  this.title = "";
-  this.description = "";
-},
 
-openEditTask(id) {
+  addNewProject(){
+    let id = this.projectList.length;
+    this.createProject.id = id;
+    this.$store.dispatch("app/setProject", this.createProject);
+    console.log('addnew home page create', this.createProject );
+
+    console.log('addnew home page projects', this.projectList );
+
+    this.createProject = {
+      id: null,
+      title: "",
+      description: "",
+    };
+  },
+
+
+// createProject() {
+//   let id = this.projectList.length;
+//   this.projectList = [...this.projectList, {
+//     id: id,
+//     title: this.title,
+//     description: this.description,
+//     taskList: [],
+//     taskInput: "",
+//   }];
+//   this.title = "";
+//   this.description = "";
+// },
+
+openEditProject(id) {
   this.selectedItem = id;
-  let foundId = this.taskList.findIndex(x => x.id == this.selectedItem);
+  let foundId = this.projectList.findIndex(x => x.id == this.selectedItem);
 
-  this.editTitle = this.taskList[foundId].title;
-  this.editDescription = this.taskList[foundId].description;
+  this.editTitle = this.projectList[foundId].title;
+  this.editDescription = this.projectList[foundId].description;
+  taskArr = this.projectList[foundId].taskList;
   console.log(this.selectedItem);
 },
 
-editTask() {
-  let foundId = this.taskList.findIndex((x) => x.id == this.selectedItem);
+editProject() {
+  let foundId = this.projectList.findIndex((x) => x.id == this.selectedItem);
   console.log(foundId);
   let editedTask = {
     id: this.selectedItem,
     title: this.editTitle,
     description: this.editDescription,
+    taskInput: "",
+    taskList : taskArr,
   };
   console.log(editedTask);
   this.taskList[foundId] = editedTask;
@@ -199,25 +223,26 @@ editTask() {
   editedTask = "";
   this.editTitle = "";
   this.editDescription = "";
+  taskArr = [];
 },
 
-deleteTask(index) {
-  this.taskList.splice(index,1);
+deleteProject(index) {
+  this.projectList.splice(index,1);
 },
 
-addItem(newItem,id) {
-  let index = this.taskList[id].itemList.length;
-  this.taskList[id].itemList = [...this.taskList[id].itemList, {
+addTask(newTask,id) {
+  let index = this.projectList[id].taskList.length;
+  this.projectList[id].taskList = [...this.projectsList[id].taskList, {
     id: index,
-    item: newItem,
+    task: newTask,
   }];
-  this.taskList[id].taskInput = "";
+  this.projectList[id].taskInput = "";
   index = null;
 
 },
 
-deleteItem(index, itemID) {
-  this.taskList[index].itemList.splice(itemID,1);
+deleteTask(index, itemID) {
+  this.projectList[index].taskList.splice(itemID,1);
 },
 },
 };
@@ -246,7 +271,7 @@ transition: 0.5s;
 }
 
 .content {
-height: 50px;
+height: 60px;
 width: 100%;
 background-color: #fff;
 padding-top: 20px;
@@ -256,22 +281,22 @@ text-align: center;
 height: 200px;
 width: 100%;
 background-color: #fff;
-padding-top: 20px;
+padding-top: 10px;
 text-align: start;
 text-transform: capitalize;
 
 }
 .content-card .card-wraps {
-padding: 10px;
+padding: 50px;
 width: 100%;
 display: flex;
 justify-content: space-evenly;
 }
 
 .card-wraps .my-card {
-height: 500px;
+height: 470px;
 width: 330px;
-box-shadow: 0px 5px 5px #a5a5a5;
+box-shadow: 0px 3px 3px  #a5a5a5;
 justify-content: space-between;
 }
 

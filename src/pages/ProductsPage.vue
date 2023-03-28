@@ -2,7 +2,7 @@
   <div class="content">
     <div class="q-pa-md">
     <q-table
-      title="Projects"
+      title="Products"
       :data="products"
       :columns="columns"
 
